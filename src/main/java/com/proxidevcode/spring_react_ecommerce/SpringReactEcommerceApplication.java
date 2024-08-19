@@ -21,11 +21,9 @@ public class SpringReactEcommerceApplication {
 		return args -> {
 			Category cat1 = new Category();
 			cat1.setName("Chocolat");
-
 			Category category = new Category(null, "Mambo");
-			// Category cat3 = Category.builder().name("Repe").build();
-			categoryRepository.saveAll(List.of(cat1, category));
-			
+			Category cat3 = Category.builder().name("Repe").build();
+			categoryRepository.saveAll(List.of(cat1, cat3, category));  
 		};
 	}
 
