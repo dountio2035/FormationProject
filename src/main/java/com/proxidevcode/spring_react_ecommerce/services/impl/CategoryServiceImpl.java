@@ -6,12 +6,17 @@ import org.springframework.stereotype.Service;
 
 import com.proxidevcode.spring_react_ecommerce.dtos.CategoryRequest;
 import com.proxidevcode.spring_react_ecommerce.dtos.CategoryResponse;
+import com.proxidevcode.spring_react_ecommerce.exceptions.ResourceNotFoundException;
 import com.proxidevcode.spring_react_ecommerce.mappers.CategoryMapper;
 import com.proxidevcode.spring_react_ecommerce.models.Category;
 import com.proxidevcode.spring_react_ecommerce.repositories.CategoryRepository;
 import com.proxidevcode.spring_react_ecommerce.services.CategoryService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import static com.proxidevcode.spring_react_ecommerce.utils.AppConstants.CATEGORY;
+import static com.proxidevcode.spring_react_ecommerce.utils.AppConstants.ID;
 
 @Service
 @RequiredArgsConstructor
@@ -40,16 +45,16 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryResponse updateCategory(Long id, CategoryRequest dto) {
-        Category existingCategory = categoryRepository.findById(id).get();
+        Category existingCategory = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(CATEGORY, ID, id));
         existingCategory.setName(dto.name());
         Category updatedCategory = categoryRepository.save(existingCategory);
         return mapper.mapToDto(updatedCategory);
     }
 
     @Override
-    public Void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
-        return null;
+    public void deleteCategory(Long id) {
+        Category existingCategory = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(CATEGORY, ID, id));
+        categoryRepository.delete(existingCategory);
     }
     
 }

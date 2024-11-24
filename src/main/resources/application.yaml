@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: spring_react_store
+  datasource:
+    url:  jdbc:postgresql://localhost:5432/spring_react_store
+    username: duclair
+    password: duclair
+  jpa:
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "tchiofodavid@gmail.com"
+    password: "hzcx jsyv wjim qcxk"
+    properties:
+      mail:
+        smtp:
+          auth:
+          starttls:
+            enable:
+server:
+  servlet:
+    context-path: /api/v1
